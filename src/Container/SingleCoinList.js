@@ -10,8 +10,8 @@ function SingleCoinList({coin}) {
         <h6>{coin.fullName}</h6>
         </div>
         <div>
-          <h6>price: {coin.price.toFixed(2)}</h6>
-          <span style={{color:`${coin.dayChange > 0 ? "green" : "red"}`}}>{coin.dayChange.toFixed(2)}</span>
+          <h6>price: {coin.price ? coin.price.toFixed(2):coin.price}</h6>
+          <span style={{color:`${coin.dayChange > 0 ? "green" : "red"}`}}>{coin.dayChange ? coin.dayChange.toFixed(2):coin.dayChange}</span>
         </div>
     </div>
   )

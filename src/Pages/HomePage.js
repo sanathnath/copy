@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import Banner from '../Container/Banner';
 import SingleCoinList from '../Container/SingleCoinList'
+import cryptos from '../data/allCoins.json'
 
 function HomePage() {
     const [list, setList] = useState([]);
@@ -18,7 +19,7 @@ function HomePage() {
         setLoading(false);
     }
     const handleSearch = ()=>{
-      return list.filter((item)=>{
+      return cryptos.filter((item)=>{
         return item.name.toLowerCase().includes(searchText.toLowerCase()) ||
         item.fullName.toLowerCase().includes(searchText.toLocaleLowerCase())
           
@@ -28,23 +29,23 @@ function HomePage() {
     const handlePageClick = (event)=>{
       setPageNumber(event.selected);
     }
-    useEffect(() => {
-      console.log("effet");
-        getList();
-    },[])
+    //useEffect(() => {
+     // console.log("effet");
+       // getList();
+   // },[])
 
   return (
     <main className='main'>
     <div className='homePage'>
         <Banner />
-        {loading ? null : 
+        {cryptos.length === 0 ? null : 
         <div className='search'>
           <input value={searchText} onInput={(event)=>{
             setSearchText(event.target.value)
             }} placeholder='search crypto'/>
         </div>
       }
-        {list.length === 0 ?"loading":
+        {cryptos.length === 0 ?"loading":
         handleSearch().slice(pageNumber*10,(pageNumber*10)+10).map((item)=>{
           return <SingleCoinList coin={item}/>
         })}

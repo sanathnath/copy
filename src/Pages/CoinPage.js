@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2';
 import { useParams } from 'react-router-dom';
 import { Chart as ChartJS,registerables } from 'chart.js';
+import graphValue from '../data/graph.json'
 ChartJS.register(...registerables);
 
 function CoinPage() {
@@ -11,33 +12,33 @@ function CoinPage() {
   const {id,name} = useParams();
   console.log("id",id,name);
   const getGraph = async()=>{
-    const data = await axios.get(`https://jsonkeeper.com/b/DB32`).then((res)=>{
+    const data = await axios.get(`/b/DB32`).then((res)=>{
       console.log(res.data);
       return res.data;
     })
     setGraphData(data);
   }
   
-  useEffect(() => {
-    getGraph();
-    console.log("outside timer");
-    let timeId = setInterval(()=>{
-      console.log("inside timer");
-      getGraph();
-    },60000);
-    return ()=>{
-      clearInterval(timeId);
-    }
-  }, []);
+  // useEffect(() => {
+  //   getGraph();
+  //   console.log("outside timer");
+  //   let timeId = setInterval(()=>{
+  //     console.log("inside timer");
+  //     getGraph();
+  //   },60000);
+  //   return ()=>{
+  //     clearInterval(timeId);
+  //   }
+  // }, []);
   
   const data = {
-    labels: graphData.map((item)=>{
+    labels: graphValue.map((item)=>{
       let date = item.datetime.split('.');
       return date[0];
     }),
     datasets:[{
       label:name,
-      data:graphData.map((item)=>{
+      data:graphValue.map((item)=>{
         return item.price;
       }),
       borderColor:"black",
@@ -61,3 +62,4 @@ function CoinPage() {
 }
 
 export default CoinPage
+
